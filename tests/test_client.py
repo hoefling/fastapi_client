@@ -23,7 +23,7 @@ class Client(SyncApis):
         return self
 
     def __exit__(self, exc_type: Type[Exception], exc_val: Exception, exc_tb: TracebackType) -> None:
-        get_event_loop().run_until_complete(self.client._async_client.close())
+        get_event_loop().run_until_complete(self.client._async_client.aclose())
 
 
 def test_any() -> None:
