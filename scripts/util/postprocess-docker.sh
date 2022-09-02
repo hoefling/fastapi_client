@@ -51,7 +51,7 @@ fix_any_of() {
 
 apply_formatters() {
   autoflake --remove-all-unused-imports --recursive --remove-unused-variables --in-place "${PACKAGE_NAME}" --exclude=__init__.py
-  isort --float-to-top -w 120 -m 3 --trailing-comma --force-grid-wrap 0 --combine-as -p "${PACKAGE_NAME}" "${PACKAGE_NAME}"
+  isort --profile=black --float-to-top -p "${PACKAGE_NAME}" -p example "${PACKAGE_NAME}"
   black --fast -l 120 --target-version py36 "${PACKAGE_NAME}"
 }
 
