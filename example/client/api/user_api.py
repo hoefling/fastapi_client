@@ -1,6 +1,6 @@
 # flake8: noqa E501
 from asyncio import get_event_loop
-from typing import TYPE_CHECKING, Awaitable, List
+from typing import TYPE_CHECKING, Awaitable
 
 from fastapi.encoders import jsonable_encoder
 
@@ -14,7 +14,10 @@ class _UserApi:
     def __init__(self, api_client: "ApiClient"):
         self.api_client = api_client
 
-    def _build_for_create_user(self, body: m.User) -> Awaitable[None]:
+    def _build_for_create_user(
+        self,
+        body: m.User,
+    ) -> Awaitable[None]:
         """
         This can only be done by the logged in user.
         """
@@ -22,21 +25,32 @@ class _UserApi:
 
         return self.api_client.request(type_=None, method="POST", url="/user", json=body)
 
-    def _build_for_create_users_with_array_input(self, body: List[m.User]) -> Awaitable[None]:
+    def _build_for_create_users_with_array_input(
+        self,
+        body: [User],
+    ) -> Awaitable[None]:
         body = jsonable_encoder(body)
 
         return self.api_client.request(type_=None, method="POST", url="/user/createWithArray", json=body)
 
-    def _build_for_create_users_with_list_input(self, body: List[m.User]) -> Awaitable[None]:
+    def _build_for_create_users_with_list_input(
+        self,
+        body: [User],
+    ) -> Awaitable[None]:
         body = jsonable_encoder(body)
 
         return self.api_client.request(type_=None, method="POST", url="/user/createWithList", json=body)
 
-    def _build_for_delete_user(self, username: str) -> Awaitable[None]:
+    def _build_for_delete_user(
+        self,
+        username: str,
+    ) -> Awaitable[None]:
         """
         This can only be done by the logged in user.
         """
-        path_params = {"username": str(username)}
+        path_params = {
+            "username": str(username),
+        }
 
         return self.api_client.request(
             type_=None,
@@ -45,8 +59,13 @@ class _UserApi:
             path_params=path_params,
         )
 
-    def _build_for_get_user_by_name(self, username: str) -> Awaitable[m.User]:
-        path_params = {"username": str(username)}
+    def _build_for_get_user_by_name(
+        self,
+        username: str,
+    ) -> Awaitable[m.User]:
+        path_params = {
+            "username": str(username),
+        }
 
         return self.api_client.request(
             type_=m.User,
@@ -55,8 +74,15 @@ class _UserApi:
             path_params=path_params,
         )
 
-    def _build_for_login_user(self, username: str, password: str) -> Awaitable[str]:
-        query_params = {"username": str(username), "password": str(password)}
+    def _build_for_login_user(
+        self,
+        username: str,
+        password: str,
+    ) -> Awaitable[str]:
+        query_params = {
+            "username": str(username),
+            "password": str(password),
+        }
 
         return self.api_client.request(
             type_=str,
@@ -74,11 +100,17 @@ class _UserApi:
             url="/user/logout",
         )
 
-    def _build_for_update_user(self, username: str, body: m.User) -> Awaitable[None]:
+    def _build_for_update_user(
+        self,
+        username: str,
+        body: m.User,
+    ) -> Awaitable[None]:
         """
         This can only be done by the logged in user.
         """
-        path_params = {"username": str(username)}
+        path_params = {
+            "username": str(username),
+        }
 
         body = jsonable_encoder(body)
 
@@ -88,71 +120,142 @@ class _UserApi:
 
 
 class AsyncUserApi(_UserApi):
-    async def create_user(self, body: m.User) -> None:
+    async def create_user(
+        self,
+        body: m.User,
+    ) -> None:
         """
         This can only be done by the logged in user.
         """
-        return await self._build_for_create_user(body=body)
+        return await self._build_for_create_user(
+            body=body,
+        )
 
-    async def create_users_with_array_input(self, body: List[m.User]) -> None:
-        return await self._build_for_create_users_with_array_input(body=body)
+    async def create_users_with_array_input(
+        self,
+        body: [User],
+    ) -> None:
+        return await self._build_for_create_users_with_array_input(
+            body=body,
+        )
 
-    async def create_users_with_list_input(self, body: List[m.User]) -> None:
-        return await self._build_for_create_users_with_list_input(body=body)
+    async def create_users_with_list_input(
+        self,
+        body: [User],
+    ) -> None:
+        return await self._build_for_create_users_with_list_input(
+            body=body,
+        )
 
-    async def delete_user(self, username: str) -> None:
+    async def delete_user(
+        self,
+        username: str,
+    ) -> None:
         """
         This can only be done by the logged in user.
         """
-        return await self._build_for_delete_user(username=username)
+        return await self._build_for_delete_user(
+            username=username,
+        )
 
-    async def get_user_by_name(self, username: str) -> m.User:
-        return await self._build_for_get_user_by_name(username=username)
+    async def get_user_by_name(
+        self,
+        username: str,
+    ) -> m.User:
+        return await self._build_for_get_user_by_name(
+            username=username,
+        )
 
-    async def login_user(self, username: str, password: str) -> str:
-        return await self._build_for_login_user(username=username, password=password)
+    async def login_user(
+        self,
+        username: str,
+        password: str,
+    ) -> str:
+        return await self._build_for_login_user(
+            username=username,
+            password=password,
+        )
 
     async def logout_user(
         self,
     ) -> None:
         return await self._build_for_logout_user()
 
-    async def update_user(self, username: str, body: m.User) -> None:
+    async def update_user(
+        self,
+        username: str,
+        body: m.User,
+    ) -> None:
         """
         This can only be done by the logged in user.
         """
-        return await self._build_for_update_user(username=username, body=body)
+        return await self._build_for_update_user(
+            username=username,
+            body=body,
+        )
 
 
 class SyncUserApi(_UserApi):
-    def create_user(self, body: m.User) -> None:
+    def create_user(
+        self,
+        body: m.User,
+    ) -> None:
         """
         This can only be done by the logged in user.
         """
-        coroutine = self._build_for_create_user(body=body)
+        coroutine = self._build_for_create_user(
+            body=body,
+        )
         return get_event_loop().run_until_complete(coroutine)
 
-    def create_users_with_array_input(self, body: List[m.User]) -> None:
-        coroutine = self._build_for_create_users_with_array_input(body=body)
+    def create_users_with_array_input(
+        self,
+        body: [User],
+    ) -> None:
+        coroutine = self._build_for_create_users_with_array_input(
+            body=body,
+        )
         return get_event_loop().run_until_complete(coroutine)
 
-    def create_users_with_list_input(self, body: List[m.User]) -> None:
-        coroutine = self._build_for_create_users_with_list_input(body=body)
+    def create_users_with_list_input(
+        self,
+        body: [User],
+    ) -> None:
+        coroutine = self._build_for_create_users_with_list_input(
+            body=body,
+        )
         return get_event_loop().run_until_complete(coroutine)
 
-    def delete_user(self, username: str) -> None:
+    def delete_user(
+        self,
+        username: str,
+    ) -> None:
         """
         This can only be done by the logged in user.
         """
-        coroutine = self._build_for_delete_user(username=username)
+        coroutine = self._build_for_delete_user(
+            username=username,
+        )
         return get_event_loop().run_until_complete(coroutine)
 
-    def get_user_by_name(self, username: str) -> m.User:
-        coroutine = self._build_for_get_user_by_name(username=username)
+    def get_user_by_name(
+        self,
+        username: str,
+    ) -> m.User:
+        coroutine = self._build_for_get_user_by_name(
+            username=username,
+        )
         return get_event_loop().run_until_complete(coroutine)
 
-    def login_user(self, username: str, password: str) -> str:
-        coroutine = self._build_for_login_user(username=username, password=password)
+    def login_user(
+        self,
+        username: str,
+        password: str,
+    ) -> str:
+        coroutine = self._build_for_login_user(
+            username=username,
+            password=password,
+        )
         return get_event_loop().run_until_complete(coroutine)
 
     def logout_user(
@@ -161,9 +264,16 @@ class SyncUserApi(_UserApi):
         coroutine = self._build_for_logout_user()
         return get_event_loop().run_until_complete(coroutine)
 
-    def update_user(self, username: str, body: m.User) -> None:
+    def update_user(
+        self,
+        username: str,
+        body: m.User,
+    ) -> None:
         """
         This can only be done by the logged in user.
         """
-        coroutine = self._build_for_update_user(username=username, body=body)
+        coroutine = self._build_for_update_user(
+            username=username,
+            body=body,
+        )
         return get_event_loop().run_until_complete(coroutine)
