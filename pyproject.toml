@@ -6,7 +6,7 @@ authors = ["David Montague"]
 
 [tool.poetry.dependencies]
 python = "^3.7"
-fastapi = "^0.81.0"
+fastapi = "^0.85.0"
 pydantic = "*"
 httpx = "*"
 typing_extensions = "*"
